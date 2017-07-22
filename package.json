@@ -1,11 +1,11 @@
 {
-  "name": "new_pro",
+  "name": "mean_todo",
   "version": "1.0.0",
-  "description": "tutorial",
+  "description": "mean_todo",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": ""
   },
-  "author": "",
-  "license": "ISC"
+  "author": "akash",
+  "license": ""
 }
