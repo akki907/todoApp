@@ -1,0 +1,6 @@
+{
+  "name":"My Stuff",
+  "description": "A Mean Stack app for Blog",
+  "repository" :"https://github.com/akki907/new_mean_project",
+  "keywords":["mean","mystuff","angular"],
+}

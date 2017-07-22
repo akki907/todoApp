@@ -1,0 +1,15 @@
+<div class="modal-header" ng-init="initUpdate(id)">
+            <h3 class="modal-title" id="modal-title">Update Todo</h3>
+</div>
+<div class="modal-body" id="modal-body">
+  <form name=myForm>
+    <div class="form-group">
+      <label for="text">Todo :</label>
+      <input type="text" name=title class="form-control" id="text" ng-model="post.title" placeholder="Create Your Todo" required>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-success"  ng-click="editPost(post)" >Update</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>
