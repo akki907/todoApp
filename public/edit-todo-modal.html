@@ -5,11 +5,11 @@
   <form name=myForm>
     <div class="form-group">
       <label for="text">Todo :</label>
-      <input type="text" name=title class="form-control" id="text" ng-model="post.title" placeholder="Create Your Todo" required>
+      <input type="text" name=title class="form-control" id="text" ng-model="todo.title" placeholder="Create Your Todo" required>
     </div>
   </form>
 </div>
 <div class="modal-footer">
-    <button type="submit" class="btn btn-success"  ng-click="editPost(post)" >Update</button>
+    <button type="submit" class="btn btn-success"  ng-click="editTodo(todo)" ng-disabled="myForm.title.$invalid" >Update</button>
     <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
 </div>

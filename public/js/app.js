@@ -2,14 +2,12 @@ var app = angular.module('todoApp', ['ui.bootstrap']);
 
 app.controller('myCtrl', function($scope,$http,$uibModal,$rootScope) {
 
-  $scope.blogPost = function(post){
-    // console.log(post);
-    $http.post('/api/blogpost',post)
+  $scope.todoPost = function(todo){
+    $http.post('/api/createtodo',todo)
     .then(function(response){
-
                 $scope.modalInstance.close(response);
-                $scope.getAllBlogs();
-                $scope.post = "";
+                $scope.getAllTodos();
+                $scope.todo = "";
               });
   }
 
@@ -20,24 +18,19 @@ app.controller('myCtrl', function($scope,$http,$uibModal,$rootScope) {
      scope: $scope
    });
    $scope.modalInstance.result.then(function () {
-      $scope.getAllBlogs();
+      $scope.getAllTodos();
    }, function () {
 
    });
 
  }
 
- $scope.cancel = function () {
-   $uibModalInstance.dismiss('cancel');
- };
 
 
-
+// update modal
  $scope.updateModal=function(id){
-  //  console.log(id);
-  // $scope.initUpdate(id);
-  $rootScope.todoId = id;
 
+    $rootScope.todoId = id;
      $scope.modalInstance = $uibModal.open({
     templateUrl: 'edit-todo-modal.html',
     animation: true,
@@ -45,13 +38,13 @@ app.controller('myCtrl', function($scope,$http,$uibModal,$rootScope) {
     controller: 'myCtrl',
   });
   $scope.modalInstance.result.then(function (selectedItem) {
-      $scope.getAllBlogs();
+      $scope.getAllTodos();
   }, function () {
-   //  $log.info('Modal dismissed at: ' + new Date());
   });
 
 }
 
+// close of modal
 $scope.cancel = function () {
     $scope.modalInstance.close();
 };
@@ -59,47 +52,35 @@ $scope.cancel = function () {
 
 $scope.initUpdate = function(){
  var id = $scope.todoId;
-  $http.get('/api/getPostById/'+id)
-  .success(function(post){
-    $scope.post = post;
+  $http.get('/api/getTodoById/'+id)
+  .success(function(todo){
+    $scope.todo = todo;
   })
 }
 
- // $scope.cancel = function() {
- //  //  $uibModalInstance.dismiss('cancel');
- //  $scope.modalInstance.close();
- // };
-
-
-
-$scope.getAllBlogs = function(){
-    $http.get('/api/allblogpost')
-         .success(function(posts){
-           $scope.posts = posts;
+// list of todos
+$scope.getAllTodos = function(){
+    $http.get('/api/allTodos')
+         .success(function(todos){
+           $scope.todos = todos;
          });
   }
-$scope.showEdit = false;
 
-  $scope.removeBlog = function(id){
-    // console.log(id);
-
-    $http.delete('/api/removeblog/'+id)
+  $scope.removeTodo = function(id){
+    $http.delete('/api/removeTodo/'+id)
     .then(function(response){
-                // $scope.deleteBookmarkModal.hide();
-                // toaster.pop("success","Bookmark deleted successfully");
-                // setTimeout(function(){$scope.getAllBlogs();},2000);
-                $scope.getAllBlogs();
+                $scope.getAllTodos();
               });
   }
 
 
 
-  $scope.editPost = function(post){
-    $http.put('/api/editpost/'+post._id,post)
+  $scope.editTodo = function(todo){
+    $http.put('/api/editTodo/'+todo._id,todo)
     .then(function(response){
       $scope.modalInstance.close(response);
-      $scope.getAllBlogs();
-      $scope.post = "";
+      $scope.getAllTodos();
+      $scope.todo = "";
     })
   }
 

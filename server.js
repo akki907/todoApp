@@ -1,4 +1,4 @@
-var Blog = require('./models/model.js')
+var Todo = require('./models/model.js')
 var express = require('express');
 var mongoose = require('mongoose');
 var morgan = require('morgan');
@@ -7,7 +7,7 @@ var app = express();
 
 var MONGOLAB_URI = 'mongodb://localhost/Todo';
 
-// var MONGOLAB_URI = 'mongodb://akki:1111111@ds149382.mlab.com:49382/myblog'
+
 // mongoose.connect(process.env.MONGOLAB_URI, function(err,response){
 mongoose.connect(MONGOLAB_URI, function(err,response){
   if(err){
@@ -23,7 +23,7 @@ var router = express.Router();
 // get
 
 router.get('/api/users',function(req,res){
-  Blog.find({},function(err,users){
+  Todo.find({},function(err,users){
     if(err){
       res.status(404).send(err);
     }else {
@@ -42,39 +42,32 @@ app.use(morgan('dev'));
 //   res.send('hello');
 // })
 
-app.post('/api/blogpost',createPost);
-app.get('/api/allblogpost',allblogpost);
-app.delete('/api/removeblog/:id',removeblog);
-app.get('/api/getPostById/:id',getPostById);
-app.put('/api/editpost/:id',editPost);
+app.post('/api/createtodo',createtodo);
+app.get('/api/allTodos',allTodos);
+app.delete('/api/removeTodo/:id',removeTodo);
+app.get('/api/getTodoById/:id',getTodoById);
+app.put('/api/editTodo/:id',editTodo);
 
-function editPost(req,res){
+function editTodo(req,res){
 var post = req.body
-console.log(post);
 var id = req.params.id;
-// Blog.update
-        // var id=req.params.id;
-        Blog.findOne({"_id":id},
-
-             function(err,blog){
+        Todo.findOne({"_id":id},
+             function(err,todo){
                         if(err){
                           res.status(404).send("Error Occurred");
                         }
                         else{
-                             if(!blog){
-                                 res.status(404).send("No bookmark found with id "+id);
+                             if(!todo){
+                                 res.status(404).send("No todo found with id "+id);
                                }
                              else{
-                               blog.title=req.body.title;
-                               blog.description=req.body.description;
-                              //  blog.tags=req.body.tags
-
-                               blog.save(function(err,updatedBlog){
+                               todo.title=req.body.title;
+                               todo.save(function(err,updatedTodo){
                                          if(err){
                                            res.status(500).send("Error Occurred while updating record");
                                          }
                                          else{
-                                           res.status(200).send(updatedBlog);
+                                           res.status(200).send(updatedTodo);
                                          }
                                        });
                              }
@@ -84,55 +77,46 @@ var id = req.params.id;
 
 }
 
-function getPostById(req,res){
+function getTodoById(req,res){
   var id = req.params.id;
-  console.log(id);
-  Blog.findById(id,function(err,blog){
+  Todo.findById(id,function(err,todo){
     if(err){
       console.log(err);
     }else {
-      res.send(blog);
+      res.send(todo);
     }
   })
 }
 
-function removeblog(req,res){
+function removeTodo(req,res){
   var id=req.params.id;
-  Blog.findOneAndRemove({"_id":id},
+  Todo.findOneAndRemove({"_id":id},
    function(err){
                  if(err){
                      console.log("Error : "+err);
-                     return res.status(404).send("Blog not found");
+                     return res.status(404).send("Todo not found");
                      }
-                 return res.status(200).send("Blog deleted Successfully");
+                 return res.status(200).send("Todo deleted Successfully");
                 });
 
 }
 
-function createPost(req,res){
-  // console.log('hello');
-  // console.log('request',req.body);
-  var post = req.body;
-  var blog = new Blog()
-  blog.title=req.body.title;
-  blog.description=req.body.description;
-  blog.coverImage = req.body.coverImage
-  // blog.createdDate = new Date();
-  blog.save(function(err,savedBlog){
+function createtodo(req,res){
+  // var todo = req.body;
+  var todo = new Todo()
+  todo.title=req.body.title;
+  todo.save(function(err,savedTodo){
        if(err){
          res.status(400).send('Error occurred while creating bookmark');
        }else{
-        //  console.log(savedBlog);
-         res.status(201).send(savedBlog);
+         res.status(201).send(savedTodo);
        }
    });
-  // blog.save()
-
 }
 
-function allblogpost(req,res){
+function allTodos(req,res){
 
-  Blog.find().sort('-createdDate').exec(function(err,posts){
+  Todo.find().sort('-createdDate').exec(function(err,posts){
     if(err){
       console.log(err);
     }else{

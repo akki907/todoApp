@@ -1,15 +1,8 @@
 var mongoose = require('mongoose');
-
-
 var Schema = mongoose.Schema;
-
-var BlogSchema = new Schema({
+var TodoSchema = new Schema({
   title:String,
-  description:String,
-  createdDate: {type : Date , default : Date.now},
-  coverImage: String
+  createdDate: {type : Date , default : Date.now}
 });
-
-var model = mongoose.model('Blog', BlogSchema);
-
+var model = mongoose.model('Todo', TodoSchema);
 module.exports = model;

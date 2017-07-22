@@ -56,15 +56,19 @@
     </button>
   </div>
 </div>
+<!-- <hr> -->
+<div class="container">
+  <h1><i>Todo List</i> </h1>
+</div>
       <div class="container margin-top">
-        <div class="col-md-12" ng-init="getAllBlogs()" >
-          <div class="" ng-repeat = "post in posts">
-            <div class="well well-lg">{{post.title}}
-              <button type="button" class="btn btn-success pull-right" ng-click="updateModal(post._id)" >
+        <div class="col-md-12" ng-init="getAllTodos()" >
+          <div class="" ng-repeat = "todo in todos">
+            <div class="well well-lg">{{todo.title}}
+              <button type="button" class="btn btn-success pull-right" ng-click="updateModal(todo._id)" >
               <span class="glyphicon glyphicon-pencil"></span>
               </button>
 
-              <button type="button" class="btn btn-danger pull-right" ng-click="removeBlog(post._id)" style="margin-right: 10px">
+              <button type="button" class="btn btn-danger pull-right" ng-click="removeTodo(todo._id)" style="margin-right: 10px">
               <span class="glyphicon glyphicon-trash"></span>
               </button>
             </div>
@@ -78,7 +82,7 @@
               </button>
             </h1> -->
             Created At :
-            <em>{{post.createdDate | date:'yyyy-MM-dd HH:mm:ss '}}</em>
+            <em>{{todo.createdDate | date:'yyyy-MM-dd HH:mm:ss '}}</em>
           </div>
         </div>
       </div>
